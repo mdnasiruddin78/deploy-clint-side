@@ -7,23 +7,49 @@ import {
 } from "react-router-dom";
 import App from './App';
 import Addcoffee from './components/Addcoffee';
+import Signin from './components/Signin';
+import Signup from './components/Signup';
+import Home from './components/Home';
+import Authprovider from './Providers/Authprovider';
+import Users from './components/Users';
 
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App></App>,
-    loader: () => fetch('http://localhost:5000/coffee')
+    children: [
+      {
+        path: "/",
+        element: <Home></Home>,
+        loader: () => fetch('http://localhost:5000/coffee'),
+      },
+      {
+        path: '/addcoffee',
+        element: <Addcoffee></Addcoffee>
+      },
+      {
+        path: '/signin',
+        element: <Signin></Signin>
+      },
+      {
+        path: '/signup',
+        element: <Signup></Signup>,
+      },
+      {
+        path: '/users',
+        element: <Users></Users>,
+        loader: () => fetch('http://localhost:5000/users')
+      }
+    ]
   },
-  {
-    path: '/addcoffee',
-    element: <Addcoffee></Addcoffee>
-  }
 ]);
 
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-     <RouterProvider router={router} />
+     <Authprovider>
+      <RouterProvider router={router} />
+     </Authprovider>
   </StrictMode>,
 )
