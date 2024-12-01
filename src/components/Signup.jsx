@@ -31,7 +31,7 @@ const Signup = () => {
             .then(data => {
                 console.log('user create at db',data)
                 if(data.acknowledged){
-                    e.target.reset()
+                     e.target.reset()
                     Swal.fire({
                         title: 'Success!',
                         text: 'Do you want to continue',
